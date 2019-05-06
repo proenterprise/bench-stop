@@ -1,5 +1,7 @@
 # bench-stop
-Script to stop bench (development) started with `bench start`. The goal is to get it integrated into bench.
+Script to stop bench (development) started with `bench start`. 
+
+The goal is to get it integrated into bench. All contributions to this goal are welcome.
 
 ## Installation
 - `cd frappe-bench #or whatever your bench directory is`
