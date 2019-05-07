@@ -18,13 +18,16 @@ ports = [1100, 1200, 1300, 900, 800]
 lines = {}
 port_suffix = 0;
 sockets = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-with open("./config/redis_cache.conf") as config_file:
-    for line in config_file:
-        key, value = line.partition(" ")[::2]
-        lines[key.strip()] = value.strip()
-    port_suffix =  lines["port"][-1:]
-config_file.close()
+try:
+  with open("./config/redis_cache.conf") as config_file:
+      for line in config_file:
+          key, value = line.partition(" ")[::2]
+          lines[key.strip()] = value.strip()
+      port_suffix =  lines["port"][-1:]
+  config_file.close()
+except IOError:
+    print('The file redis_cache.conf was not found. Are you sure you stop.py is in bench directory?')
+    exit();
 
 # Closing open ports after combining each port prefix and suffix
 for port in ports:
