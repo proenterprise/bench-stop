@@ -10,7 +10,7 @@
 """
 
 
-import os, socket, errno
+import os, socket, errno, time
 
 # Declaring part of ports.
 # Getting port suffix from current  redis config.
@@ -35,13 +35,23 @@ for port in ports:
   try:
     sockets.bind(("127.0.0.1", port))
   except socket.error as e:
+
     if e.errno == errno.EADDRINUSE:
       os.system("echo 'shutdown' | redis-cli -h 127.0.0.1 -p %d" % port)
-      if e.errno == errno.EADDRINUSE:
-        os.system("sudo kill `sudo lsof -t -i: %d`" % port)
-      else:
-        print 'Port %d' % port, 'was closed'
+      time.sleep(3)
+
+      try:
+        sockets.bind(("127.0.0.1", port))
+      except socket.error as e:
+        if e.errno == errno.EADDRINUSE:
+          os.system("fuser %d/tcp -k" % port)
+        else:
+          print 'Port %d' % port, 'now closed'
+
   else:
     print 'Port %d' % port, 'already closed'
+    continue
+
 sockets.close()
+
 print 'bench stopped'
