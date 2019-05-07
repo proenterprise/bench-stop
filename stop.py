@@ -34,7 +34,10 @@ for port in ports:
   except socket.error as e:
     if e.errno == errno.EADDRINUSE:
       os.system("echo 'shutdown' | redis-cli -h 127.0.0.1 -p %d" % port)
-      print 'Port %d' % port, 'closed'
+      if e.errno == errno.EADDRINUSE:
+        os.system("sudo kill `sudo lsof -t -i: %d`" % port)
+      else:
+        print 'Port %d' % port, 'was closed'
   else:
     print 'Port %d' % port, 'already closed'
 sockets.close()
