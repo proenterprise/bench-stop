@@ -54,4 +54,4 @@ for port in ports:
 
 sockets.close()
 
-print 'bench stopped'
+print ('bench stopped')
