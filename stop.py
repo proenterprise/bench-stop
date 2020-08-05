@@ -46,10 +46,10 @@ for port in ports:
         if e.errno == errno.EADDRINUSE:
           os.system("fuser %d/tcp -k" % port)
         else:
-          print 'Port %d' % port, 'now closed'
+          print ('Port %d' % port, 'now closed')
 
   else:
-    print 'Port %d' % port, 'already closed'
+    print ('Port %d' % port, 'already closed')
     continue
 
 sockets.close()
