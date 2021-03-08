@@ -50,6 +50,8 @@ for port in ports:
 
   else:
     print ('Port %d' % port, 'already closed')
+    sockets.close()
+    sockets = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     continue
 
 sockets.close()
