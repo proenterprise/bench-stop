@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """ stop.py is an attempt at creating an easy 'bench stop' command
 
     Expected improvements:
