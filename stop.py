@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """ stop.py is an attempt at creating an easy 'bench stop' command
 
     Expected improvements:
@@ -46,12 +48,14 @@ for port in ports:
         if e.errno == errno.EADDRINUSE:
           os.system("fuser %d/tcp -k" % port)
         else:
-          print 'Port %d' % port, 'now closed'
+          print ('Port %d' % port, 'now closed')
 
   else:
-    print 'Port %d' % port, 'already closed'
+    print ('Port %d' % port, 'already closed')
+    sockets.close()
+    sockets = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     continue
 
 sockets.close()
 
-print 'bench stopped'
+print ('bench stopped')
