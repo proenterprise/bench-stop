@@ -10,7 +10,7 @@ The goal is to get it integrated into bench. All contributions to this goal are 
 - `sudo rm -r ./bench-stop`
 
 ## Usage
-- `python stop.py`
+- `python3 stop.py`
 
 ## Requires
 - [bench](https://github.com/frappe/bench)
