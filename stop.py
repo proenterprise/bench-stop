@@ -12,7 +12,12 @@
 """
 
 
-import os, socket, errno, time
+import os, socket, errno, time, platform
+
+# check if os is macos, linux or windows and assign to a variable
+# if os is macos, use lsof -i tcp:port | grep -v PID | awk '{print $2}' | xargs kill
+# if os is linux, use fuser port/tcp -k
+platform = platform.platform()
 
 # Declaring part of ports.
 # Getting port suffix from current  redis config.
@@ -46,7 +51,10 @@ for port in ports:
         sockets.bind(("127.0.0.1", port))
       except socket.error as e:
         if e.errno == errno.EADDRINUSE:
-          os.system("fuser %d/tcp -k" % port)
+          if 'Linux' in platform:
+            os.system("fuser %d/tcp -k" % port)
+          else:
+            os.system("lsof -i tcp:%d | grep -v PID | awk '{print $2}' | xargs kill" % port)
         else:
           print ('Port %d' % port, 'now closed')
 
